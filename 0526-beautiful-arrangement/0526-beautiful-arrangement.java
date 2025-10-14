@@ -1,22 +1,21 @@
 class Solution {
     public int countArrangement(int n) {
-        boolean[] visited=new boolean[n+1];
-        int a=helper(1,n,visited);
-        return a;
+        boolean[] a=new boolean[n+1];
+        int count=helper(1,n,a);
+        return count;
     }
-    public int  helper(int pos,int n,boolean[] visited){
-        int count=0;
+    public int helper(int pos,int n,boolean[] a){
         if(pos>n){
-           // count++;
-            return 1;
+             return 1;
         }
+        int c=0;
         for(int i=1;i<=n;i++){
-            if(!visited[i] && (pos%i==0 || i%pos==0) ){
-                visited[i]=true;
-                count+=helper(pos+1,n,visited);
-                visited[i]=false;
+            if(a[i]!=true &&(pos%i==0 || i%pos==0)){
+                a[i]=true;
+                c+=helper(pos+1,n,a);
+                a[i]=false;
             }
         }
-        return count;
+        return c;
     }
 }
