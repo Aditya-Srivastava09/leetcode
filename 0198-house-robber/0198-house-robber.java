@@ -15,7 +15,7 @@ class Solution {
            if(nums[n]!=-1){
                return nums[n];
            }
-           int max=Integer.MIN_VALUE;
+           
            nums[n]=Math.max((arr[n]+sum(arr,n-2,nums)),sum(arr,n-1,nums));
            return nums[n];
     }
