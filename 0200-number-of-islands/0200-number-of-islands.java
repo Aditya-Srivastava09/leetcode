@@ -4,28 +4,28 @@ class Solution {
        int[] dc={0,0,-1,1};
        int m=grid.length;
        int n=grid[0].length;
+       boolean [][] visited=new boolean[m][n]; 
        int count=0;
-       boolean[][] vis=new boolean[m][n];
        for(int i=0;i<m;i++){
         for(int j=0;j<n;j++){
-            if(!vis[i][j] && grid[i][j]=='1'){
-                 dfs(i,j,grid,vis);
+            if(!visited[i][j] && grid[i][j]=='1'){
+                 dfs(i,j,grid,visited);
                  count++;
             }
         }
        }
        return count;
     }
-     void dfs(int i,int j,char[][] grid,boolean[][] vis){
-        if(i<0||j<0||i>=grid.length||j>=grid[0].length) return;
-        if(vis[i][j]||grid[i][j]=='0') return;
+    public void dfs(int i,int j,char[][] mat,boolean[][] v){
+        if(i<0||j<0||i>=mat.length||j>=mat[0].length) return;
+        if(v[i][j]||mat[i][j]=='0') return;
+        v[i][j]=true;
+        dfs(i-1,j,mat,v);
+         dfs(i+1,j,mat,v);
+          dfs(i,j-1,mat,v);
+           dfs(i,j+1,mat,v);
 
-        vis[i][j]=true;
-
-        dfs(i+1,j,grid,vis);
-        dfs(i-1,j,grid,vis);
-        dfs(i,j+1,grid,vis);
-        dfs(i,j-1,grid,vis);
     }
-     
+
+
 }
