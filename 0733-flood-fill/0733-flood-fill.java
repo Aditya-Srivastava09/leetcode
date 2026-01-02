@@ -1,34 +1,24 @@
 class Solution {
-    static void cover(int [][] image,int sr,int sc,int rr,int rc,int color,boolean [][]visited,int originalcolor){
-      if(sr < 0 || sc < 0 || sr >= rr || sc >= rc || visited[sr][sc] ||!(image[sr][sc] ==originalcolor) ){
-        return;
-      }
-      visited[sr][sc]=true;
-      image[sr][sc]=color;
-      cover(image,sr,sc+1,rr,rc,color,visited,originalcolor);
-      cover(image,sr+1,sc,rr,rc,color,visited,originalcolor);
-      cover(image,sr,sc-1,rr,rc,color,visited,originalcolor);
-      cover(image,sr-1,sc,rr,rc,color,visited,originalcolor);
-
-
-
-
-    }
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
-          int rr=image.length;
-          int rc=image[0].length;
-          boolean [][]visited=new boolean[rr][rc];
-           int originalcolor = image[sr][sc];
-        if (originalcolor == color) return image;
-
-        cover(image,sr,sc,rr,rc,color,visited,originalcolor);
+        int m=image.length;
+        int n=image[0].length;
+        boolean[][] v=new boolean[m][n];
+        int og=image[sr][sc];
+         if(image[sr][sc]==color) return image;
+        dfs(sr,sc,m,n,color,image,v,og);
         return image;
-     
-
-
-
-
-
-
     }
+    public void dfs(int sr,int sc,int m,int n,int color,int[][] image,boolean[][] v,int og){
+        if(sr<0 || sc<0 || sr>=m || sc>=n || image[sr][sc]!=og || v[sr][sc]==true) return;
+        v[sr][sc]=true;
+        image[sr][sc]=color;
+        int[] dr={-1,1,0,0};
+        int[] dc={0,0,-1,1};
+        for(int i=0;i<4;i++){
+            int nr=dr[i]+sr;
+            int nc=dc[i]+sc;
+            dfs(nr,nc,m,n,color,image,v,og);
+        }
+    }
+
 }
