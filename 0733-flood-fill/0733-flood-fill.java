@@ -1,24 +1,22 @@
 class Solution {
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
-        int m=image.length;
+         int m=image.length;
         int n=image[0].length;
+         if(image[sr][sc]==color){
+          return image;
+        }
         boolean[][] v=new boolean[m][n];
         int og=image[sr][sc];
-         if(image[sr][sc]==color) return image;
-        dfs(sr,sc,m,n,color,image,v,og);
+        dfs(image,0,0,m-1,n-1,color,og,v);
         return image;
     }
-    public void dfs(int sr,int sc,int m,int n,int color,int[][] image,boolean[][] v,int og){
-        if(sr<0 || sc<0 || sr>=m || sc>=n || image[sr][sc]!=og || v[sr][sc]==true) return;
-        v[sr][sc]=true;
-        image[sr][sc]=color;
-        int[] dr={-1,1,0,0};
-        int[] dc={0,0,-1,1};
-        for(int i=0;i<4;i++){
-            int nr=dr[i]+sr;
-            int nc=dc[i]+sc;
-            dfs(nr,nc,m,n,color,image,v,og);
-        }
+    public void dfs(int[][] image,int i,int j,int m,int n,int color,int og,boolean[][]v){
+        if(i<0 || j<0 || i>=m || j>=n || image[i][j]!=og) return ;
+        v[i][j]=true;
+        image[i][j]=color;
+        dfs(image,i-1,j,m,n,color,og,v);
+        dfs(image,i+1,j,m,n,color,og,v);
+        dfs(image,i,j+1,m,n,color,og,v);
+        dfs(image,i,j-1,m,n,color,og,v);
     }
-
 }
