@@ -1,24 +1,21 @@
 class Solution {
-    Boolean[] memo;
-
+    Boolean [] dp;
     public boolean wordBreak(String s, List<String> wordDict) {
-        memo = new Boolean[s.length()];
-        return dfs(0, s, wordDict);
+        HashSet<String> s1=new HashSet<>(wordDict);
+        dp=new Boolean[s.length()];
+         return  solve(0,s,dp,s1);
+
     }
-
-    private boolean dfs(int idx, String s, List<String> wordDict) {
-        if (idx == s.length()) return true;
-        if (memo[idx] != null) return memo[idx];
-
-        for (String word : wordDict) {
-            if (idx + word.length() <= s.length() &&
-                s.startsWith(word, idx)) {
-                
-                if (dfs(idx + word.length(), s, wordDict)) {
-                    return memo[idx] = true;
-                }
+    public Boolean solve(int idx,String s,Boolean[] dp, HashSet<String> s1){
+        if(s.length()==idx){
+            return true;
+        }
+        if(dp[idx]!=null) return dp[idx];
+        for(int i=idx;i<=s.length();i++){
+            if(s1.contains(s.substring(idx,i)) && solve(i,s,dp,s1)){
+               return dp[idx]=true;
             }
         }
-        return memo[idx] = false;
+        return dp[idx]=false;
     }
 }
