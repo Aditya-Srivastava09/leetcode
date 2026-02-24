@@ -7,7 +7,7 @@ class Solution {
         }
         boolean[][] v=new boolean[m][n];
         int og=image[sr][sc];
-        dfs(image,0,0,m-1,n-1,color,og,v);
+        dfs(image,sr,sc,m,n,color,og,v);
         return image;
     }
     public void dfs(int[][] image,int i,int j,int m,int n,int color,int og,boolean[][]v){
