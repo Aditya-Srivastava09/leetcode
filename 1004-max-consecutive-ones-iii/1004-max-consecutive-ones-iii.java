@@ -7,6 +7,7 @@ class Solution {
         while(r<nums.length){
             if(nums[r]==0){
                   zeros++;
+                 // r++;
             }
             if(zeros>k){
                while(zeros>k){
@@ -17,11 +18,12 @@ class Solution {
                }
 
             }
-            if(zeros<=k){
+            else{
                 int len=r-l+1;
                 maxlength=Math.max(maxlength,len);
-                r++;
+                //r++;
             }
+            r++;
         }
         return maxlength;
     }
