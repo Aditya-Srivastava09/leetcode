@@ -1,34 +1,38 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<List<Integer>> graph = new ArrayList<>();
-        for (int i = 0; i < numCourses; i++){
-            graph.add(new ArrayList<>());
+        List<ArrayList<Integer>> a=new ArrayList<>();
+        for(int i=0;i<numCourses;i++){
+            a.add(new ArrayList<>());
         }
-        for (int[] p : prerequisites) {
-            graph.get(p[1]).add(p[0]);
+        int[] indegree=new int[numCourses];
+        for(int i=0;i<prerequisites.length;i++){
+            int u=prerequisites[i][0];
+            int v=prerequisites[i][1];
+            a.get(v).add(u);
+            indegree[u]++;
         }
-
-        int[] visited =new int[numCourses];
-        for (int i = 0; i < numCourses; i++) {
-            if (!dfs(i, visited, graph)){
-                 return false;
+        List<Integer> ans=new ArrayList<>();
+        Queue<Integer> q=new LinkedList<>();
+        for(int i=0;i<indegree.length;i++){
+            if(indegree[i]==0){
+                q.add(i);
             }
         }
-        return true;
-    }
-
-    public boolean dfs(int node, int[] visited, List<List<Integer>> graph) {
-        if (visited[node] == 1) return false;
-        if (visited[node] == 2) return true;
-
-        visited[node] =1;
-        for (int next : graph.get(node)) {
-            if (!dfs(next, visited, graph)){
-                 return false;
+        while(!q.isEmpty()){
+            int n=q.poll();
+            ans.add(n);
+            for(int node:a.get(n)){
+                indegree[node]--;
+                if(indegree[node]==0){
+                    q.add(node);
+                }
             }
         }
+        
+        if(ans.size()==numCourses){
+            return true;
+        }
+        return false;
 
-        visited[node] = 2;
-        return true;
     }
 }
